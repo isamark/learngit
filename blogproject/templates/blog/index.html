@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block body %}
+   <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    {% for post in post_all %}
+                    <div class="blog-main">
+                        <div class="heading-blog">
+                            {{ post.title }}
+                        </div>
+                        <a href="/blog/detail/{{ post.id }}/">
+                            <img src="/static/{{ post.pic }}" class="img-responsive img-rounded" />
+                        </a>
+                        <div class="blog-info">
+                            <span class="label label-primary">{{ post.created_time }}</span>
+                            <span class="label label-success">{{ post.address }}</span>
+                            <span class="label label-danger">{{ post.author }}</span>
+                            <span class="label label-info">
+                                <i class="fa fa-thumbs-up"></i>+{{ post.like }}
+                        <i class="fa fa-thumbs-down"></i>-{{ post.nolike }}
+                            </span>
+                        </div>
+                        <div class="blog-txt">
+                            {{ post.excerpt }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!--BLOG ONE END -->
+                    <nav>
+                        {% if is_paginated %}
+                        <ul class="pagination">
+                            <li class="disabled"><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+                            {% if first %}
+                                <li class="active"><a href="?page=1">1 <span class="sr-only"></span></a></li>
+                            {% endif %}
+                            {% if left %}
+                                {% if left_has_more %}
+                                    <span>...</span>
+                                {% endif %}
+                                {% for i in left %}
+                                    <li><a href="?page={{ i }}">{{ i }}<span class="sr-only"></span></a></li>
+                                {% endfor %}
+                            {% endif %}
+                            <li><a href="?page={{ page_obj.number }}">{{ page_obj.number }}<span class="sr-only"></span></a></li>
+                            {% if right %}
+                                {% for i in right %}
+                                    <li><a href="?page={{ i }}">{{ i }}<span class="sr-only"></span></a></li>
+                                {% endfor %}
+                                {% if right_has_more %}
+                                    <span>...</span>
+                                {% endif %}
+                            {% endif %}
+                            {% if last %}
+                                <li><a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}<span class="sr-only"></span></a></li>
+                            {% endif %}
+                            <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+                        </ul>
+                        {% endif %}
+                    </nav>
+                     <!--PAGING  END -->
+                </div>
+{% endblock %}

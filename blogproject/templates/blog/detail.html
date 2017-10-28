@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block body %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9" >
+                      <div class="blog-main">
+                        <div class="heading-blog">
+                            {{ post.title }}
+                        </div>
+                        <img src="/static/{{ post.pic }}" class="img-responsive img-rounded" />
+                        <div class="blog-info">
+                            <span class="label label-primary">{{ post.created_time }}</span>
+                            <span class="label label-success">{{ post.address }}</span>
+                            <span class="label label-danger">{{ post.author }}</span>
+                            <span class="label label-info">
+                                <i class="fa fa-thumbs-up"></i>+ {{ post.like }}
+                        <i class="fa fa-thumbs-down"></i>-{{ post.nolike }}
+                            </span>
+                        </div>
+                        <div class="blog-txt">
+                            {{ post.body|safe }}
+                        </div>
+                    </div>
+                     <!--BLOG MAIN SECTION END-->
+                    <h3><strong>发表评论</strong></h3>
+                    <form action="/comments/{{ post.id }}/" method="post" class="comment-form">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="id_name">名字：</label><br>
+                                <input type="text" id="id_name" name="name" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="id_comment">评论：</label><br>
+                                <textarea name="comment" id="id_comment" style="width:100%; height:100px"></textarea>
+                                <button type="submit" class="comment-btn">发表</button>
+                            </div>
+                        </div>    <!-- row -->
+                    </form>
+                    <h3 ><strong>最近的评论</strong></h3>
+                    <hr />
+                    <ul class="media-list">
+                        {% for comment in comment_all %}
+                        <li class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle"   src="/static/img/user2.png" />
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{ comment.name }}</h4>
+                                <p>{{ comment.text }}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                   <!-- COMMENT SECTION - ONE END-->
+                    </ul>
+                     <!--COMMENTS SECTION END-->
+                    </div>
+
+{% endblock %}
